@@ -2,4 +2,5 @@
     <string name="title_activity_fullscreen">FullScreen Activity</string>
     <string name="app_name">GalaxionApps</string>
     <string name="api_key">90OiqW4LdWuXD34EGu63UicoKmpj9wvXy1z4F0CG</string>
+    <string name="base_url">https://api.nasa.gov</string>
 </resources>
