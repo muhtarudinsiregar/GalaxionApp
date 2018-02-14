@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.ardin.galaxionapps.data.model.Planetary
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_layout.view.*
 
 class ListAdapter(val context: Context, val lists: Planetary) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -23,6 +24,8 @@ class ListAdapter(val context: Context, val lists: Planetary) : RecyclerView.Ada
     class Item(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindData(_list: Planetary) {
             itemView.itemDate.text = _list.title
+            itemView.itemDescription.text = _list.explanation
+            Picasso.with(itemView.context).load(_list.hdurl).into(itemView.itemImage)
         }
     }
 }
