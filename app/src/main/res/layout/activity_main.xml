@@ -6,7 +6,13 @@
     tools:context="com.example.ardin.galaxionapps.MainActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>
