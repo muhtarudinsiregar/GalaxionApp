@@ -1,19 +1,26 @@
 package com.example.ardin.galaxionapps
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.example.ardin.galaxionapps.`interface`.RecyclerListener
 import com.example.ardin.galaxionapps.data.model.Planetary
+import com.example.ardin.galaxionapps.router.openPlanetaryDetail
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), RecyclerListener {
+    private var photo: Planetary? = null
+
     override fun onClick(planetary: Planetary) {
         Toast.makeText(this, planetary.title, Toast.LENGTH_SHORT).show()
+        with (planetary) {
+            openPlanetaryDetail(explanation, url)
+        }
     }
 
     val nasa = ApiBuilder().call()

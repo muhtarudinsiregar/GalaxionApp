@@ -7,37 +7,28 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ardin.galaxionapps.`interface`.RecyclerListener
 import com.example.ardin.galaxionapps.data.model.Planetary
+import com.example.ardin.galaxionapps.util.loadImageUrl
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_layout.view.*
 import kotlinx.android.synthetic.main.planetary_image_slider.view.*
 
 class PlanetaryAdapter(val lists: List<Planetary>, private val clickListener: RecyclerListener)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), PlanetaryListener {
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val PLANETARY: Int = 0
     private val IMAGE_PLANETARY: Int = 1
-
-    override fun onItemClick(position: Int) {
-        if (position != RecyclerView.NO_POSITION) {
-            clickListener.onClick(lists[position])
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         val viewHolder: RecyclerView.ViewHolder
 
         when (viewType) {
-            PLANETARY -> {
-                val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_layout, parent, false)
-                viewHolder = PlanetaryItem(v, this)
-            }
             IMAGE_PLANETARY -> {
                 val v = LayoutInflater.from(parent?.context).inflate(R.layout.planetary_image_slider, parent, false)
                 viewHolder = PlanetaryImage(v)
             }
             else -> {
                 val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_layout, parent, false)
-                viewHolder = PlanetaryItem(v, this)
+                viewHolder = PlanetaryItem(v)
             }
         }
         return viewHolder
@@ -63,35 +54,31 @@ class PlanetaryAdapter(val lists: List<Planetary>, private val clickListener: Re
             }
             IMAGE_PLANETARY -> {
                 val vh2 = holder as PlanetaryImage
-                Log.d("PLANETARY_IMAGE", lists[position].toString())
+                Log.d("PlanetaryAdapter", lists[position].toString())
                 vh2.bindData(lists[position])
             }
         }
     }
-}
 
-interface PlanetaryListener {
-    fun onItemClick(position: Int)
-}
+    inner class PlanetaryItem(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    clickListener.onClick(lists[adapterPosition])
+                }
+            }
+        }
 
-class PlanetaryItem(itemView: View, val planetaryListener: PlanetaryListener) : RecyclerView.ViewHolder(itemView) {
-    init {
-        itemView.setOnClickListener {
-            planetaryListener.onItemClick(adapterPosition)
+        fun bindData(planetary: Planetary) {
+            itemView.itemTitle.text = planetary.title
+            itemView.itemDescription.text = planetary.explanation
+            itemView.itemImage.loadImageUrl(planetary.url)
         }
     }
 
-
-    fun bindData(planetary: Planetary) {
-        itemView.itemTitle.text = planetary.title
-        itemView.itemDescription.text = planetary.explanation
-    }
-}
-
-
-class PlanetaryImage(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindData(planetary: Planetary) {
-        Log.d("NTAK", planetary.toString())
-        Picasso.with(itemView.context).load(planetary.hdurl).into(itemView.imageSlider)
+    inner class PlanetaryImage(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindData(planetary: Planetary) {
+            Picasso.with(itemView.context).load(planetary.url).into(itemView.imagePlanetary)
+        }
     }
 }

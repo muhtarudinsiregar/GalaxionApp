@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface NasaApi {
 
-    @GET("/planetary/apod?api_key=90OiqW4LdWuXD34EGu63UicoKmpj9wvXy1z4F0CG")
+    @GET("/planetary/apod?date=2018-02-17&api_key=90OiqW4LdWuXD34EGu63UicoKmpj9wvXy1z4F0CG")
     fun getPlanetary(): Call<Planetary>
 }
